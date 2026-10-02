@@ -1,0 +1,50 @@
+{
+  "name": "gemini",
+  "display": "Gemini CLI",
+  "verified": false,
+  "home": {
+    "default": "~/.gemini"
+  },
+  "command": "gemini",
+  "install": {
+    "unix": "npm install -g --prefix \"$HOME/.local\" @google/gemini-cli",
+    "windows": "npm install -g --prefix \"$env:USERPROFILE\\.local\" @google/gemini-cli"
+  },
+  "installed_binary": {
+    "unix": ".local/bin/gemini",
+    "windows": ".local/gemini.cmd"
+  },
+  "instruction_file": "GEMINI.md",
+  "carry": [
+    {
+      "path": "GEMINI.md",
+      "what": "your global instructions"
+    },
+    {
+      "path": "settings.json",
+      "what": "settings"
+    },
+    {
+      "path": "commands",
+      "what": "custom commands"
+    }
+  ],
+  "never": [
+    "oauth_creds.json",
+    "google_accounts.json",
+    "installation_id",
+    "*.key",
+    "*.pem",
+    ".env",
+    ".env.*"
+  ],
+  "allow": [
+    "*.example",
+    "*.sample",
+    "*.template"
+  ],
+  "private_env": {
+    "GEMINI_CLI_HOME": "{home}"
+  },
+  "files_subdir": ".gemini"
+}

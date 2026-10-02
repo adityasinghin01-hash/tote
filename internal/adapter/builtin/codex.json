@@ -1,0 +1,75 @@
+{
+  "name": "codex",
+  "display": "Codex CLI",
+  "verified": true,
+  "home": {
+    "env": "CODEX_HOME",
+    "default": "~/.codex"
+  },
+  "command": "codex",
+  "install": {
+    "unix": "npm install -g --prefix \"$HOME/.local\" @openai/codex",
+    "windows": "npm install -g --prefix \"$env:USERPROFILE\\.local\" @openai/codex"
+  },
+  "installed_binary": {
+    "unix": ".local/bin/codex",
+    "windows": ".local/codex.cmd"
+  },
+  "instruction_file": "AGENTS.md",
+  "carry": [
+    {
+      "path": "AGENTS.md",
+      "what": "your global instructions"
+    },
+    {
+      "path": "config.toml",
+      "what": "settings"
+    },
+    {
+      "path": "rules",
+      "what": "rules"
+    },
+    {
+      "path": "skills",
+      "what": "skills"
+    },
+    {
+      "path": "prompts",
+      "what": "custom prompts"
+    },
+    {
+      "path": "memories_1.sqlite",
+      "what": "memory"
+    }
+  ],
+  "chats": {
+    "glob": "sessions/*/*/*/rollout-*.jsonl",
+    "format": "codex-jsonl"
+  },
+  "never": [
+    "auth.json",
+    "history.jsonl",
+    "*.key",
+    "*.pem",
+    ".env",
+    ".env.*"
+  ],
+  "allow": [
+    "*.example",
+    "*.sample",
+    "*.template"
+  ],
+  "private_env": {
+    "CODEX_HOME": "{home}"
+  },
+  "private_setup": [
+    {
+      "file": "config.toml",
+      "key": "cli_auth_credentials_store",
+      "line": "cli_auth_credentials_store = \"file\""
+    }
+  ],
+  "logout": [
+    "logout"
+  ]
+}

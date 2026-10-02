@@ -1,0 +1,12 @@
+name = "tote-relay"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[[r2_buckets]]
+binding = "BOX"
+bucket_name = "tote-relay"
+
+# Sweep expired boxes every hour. Also add an R2 lifecycle rule on the bucket
+# (delete objects after 2 days) as a backstop — see relay/README.md.
+[triggers]
+crons = ["17 * * * *"]

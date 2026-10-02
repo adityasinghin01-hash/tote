@@ -1,0 +1,38 @@
+{
+  "name": "kimi",
+  "display": "Kimi Code CLI",
+  "verified": false,
+  "home": {
+    "env": "KIMI_CODE_HOME",
+    "default": "~/.kimi"
+  },
+  "command": "kimi",
+  "install": {
+    "unix": "uv tool install --python 3.13 kimi-cli"
+  },
+  "installed_binary": {
+    "unix": ".local/bin/kimi"
+  },
+  "instruction_file": "",
+  "carry": [
+    {
+      "path": "config.toml",
+      "what": "settings"
+    }
+  ],
+  "never": [
+    "credentials",
+    "*.key",
+    "*.pem",
+    ".env",
+    ".env.*"
+  ],
+  "allow": [
+    "*.example",
+    "*.sample",
+    "*.template"
+  ],
+  "private_env": {
+    "KIMI_CODE_HOME": "{home}"
+  }
+}

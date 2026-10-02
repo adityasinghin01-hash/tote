@@ -1,0 +1,79 @@
+{
+  "name": "claude",
+  "display": "Claude Code",
+  "home": {
+    "env": "CLAUDE_CONFIG_DIR",
+    "default": "~/.claude"
+  },
+  "command": "claude",
+  "install": {
+    "unix": "curl -fsSL https://claude.ai/install.sh | bash",
+    "windows": "irm https://claude.ai/install.ps1 | iex"
+  },
+  "instruction_file": "CLAUDE.md",
+  "carry": [
+    {
+      "path": "CLAUDE.md",
+      "what": "your global instructions"
+    },
+    {
+      "path": "settings.json",
+      "what": "settings and enabled plugins"
+    },
+    {
+      "path": "skills",
+      "what": "skills"
+    },
+    {
+      "path": "agents",
+      "what": "custom agents"
+    },
+    {
+      "path": "commands",
+      "what": "custom slash commands"
+    },
+    {
+      "path": "projects/*/memory",
+      "what": "memory"
+    }
+  ],
+  "chats": {
+    "glob": "projects/*/*.jsonl",
+    "format": "claude-jsonl"
+  },
+  "never": [
+    "settings.local.json",
+    ".credentials.json",
+    "history.jsonl",
+    "*.key",
+    "*.pem",
+    ".env",
+    ".env.*"
+  ],
+  "allow": [
+    "*.example",
+    "*.sample",
+    "*.template"
+  ],
+  "secure_env": "CLAUDE_SECURESTORAGE_CONFIG_DIR",
+  "min_version": {
+    "darwin": "2.1.144"
+  },
+  "installed_binary": {
+    "unix": ".local/bin/claude",
+    "windows": ".local/bin/claude.exe"
+  },
+  "logout": [
+    "auth",
+    "logout"
+  ],
+  "run_env": {
+    "DISABLE_AUTOUPDATER": "1"
+  },
+  "project_dirs": "projects",
+  "verified": true,
+  "private_env": {
+    "CLAUDE_CONFIG_DIR": "{home}",
+    "CLAUDE_SECURESTORAGE_CONFIG_DIR": "{home}"
+  }
+}

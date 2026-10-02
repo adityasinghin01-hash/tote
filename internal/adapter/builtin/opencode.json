@@ -1,0 +1,62 @@
+{
+  "name": "opencode",
+  "display": "OpenCode",
+  "verified": true,
+  "home": {
+    "env": "OPENCODE_CONFIG_DIR",
+    "default": "~/.config/opencode"
+  },
+  "command": "opencode",
+  "install": {
+    "unix": "curl -fsSL https://opencode.ai/install | bash"
+  },
+  "installed_binary": {
+    "unix": ".opencode/bin/opencode"
+  },
+  "instruction_file": "AGENTS.md",
+  "carry": [
+    {
+      "path": "AGENTS.md",
+      "what": "your global instructions"
+    },
+    {
+      "path": "opencode.json",
+      "what": "settings"
+    },
+    {
+      "path": "opencode.jsonc",
+      "what": "settings"
+    },
+    {
+      "path": "agent",
+      "what": "custom agents"
+    },
+    {
+      "path": "command",
+      "what": "custom commands"
+    },
+    {
+      "path": "plugin",
+      "what": "plugins"
+    }
+  ],
+  "never": [
+    "auth.json",
+    "*.key",
+    "*.pem",
+    ".env",
+    ".env.*"
+  ],
+  "allow": [
+    "*.example",
+    "*.sample",
+    "*.template"
+  ],
+  "private_env": {
+    "OPENCODE_CONFIG_DIR": "{home}",
+    "XDG_DATA_HOME": "{home}/.data",
+    "XDG_STATE_HOME": "{home}/.state",
+    "XDG_CACHE_HOME": "{home}/.cache",
+    "XDG_CONFIG_HOME": "{home}/.config"
+  }
+}

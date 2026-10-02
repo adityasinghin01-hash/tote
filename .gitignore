@@ -1,0 +1,6 @@
+bin/
+*.tote
+*.part
+dist/
+notes/
+.p*dir
