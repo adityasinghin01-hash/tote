@@ -1,8 +1,10 @@
 # tote
 
+[![test](https://github.com/adityasinghin01-hash/tote/actions/workflows/test.yml/badge.svg)](https://github.com/adityasinghin01-hash/tote/actions/workflows/test.yml)
+
 **Take your AI to any computer — and prove it arrived with its memory intact.**
 
-> Early preview (v0.1). It works end to end on macOS; Windows and Linux builds exist but haven't been tested on real machines yet.
+> Early preview (v0.1). Every push runs the whole journey — pack, send, open on a blank machine with a private AI install, quiz, send home, wipe — on Windows, Linux and macOS. Hands-on use so far has been on macOS.
 
 You've taught your AI coding assistant a lot: your rules, your projects, where you stopped. Then you sit at a different computer — a lab PC, a friend's laptop — and it knows nothing. tote packs that knowledge on your machine and unpacks it on the other one with **one pasted command**.
 
