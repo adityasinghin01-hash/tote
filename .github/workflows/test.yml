@@ -1,0 +1,46 @@
+name: test
+on:
+  push:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  journey:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go vet ./...
+      - run: go test ./...
+      - name: build
+        shell: bash
+        run: go build -o "tote${{ runner.os == 'Windows' && '.exe' || '' }}" ./cmd/tote
+      - name: whole journey on a blank home (installs a private Claude Code if missing)
+        shell: bash
+        run: go run ./tools/e2e --tote "./tote${{ runner.os == 'Windows' && '.exe' || '' }}"
+
+  installer:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: one-line installer (macOS / Linux)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          curl -fsSL https://github.com/adityasinghin01-hash/tote/releases/latest/download/install.sh | sh
+          "$HOME/.tote-guest/bin/tote" version
+      - name: one-line installer (Windows PowerShell)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          & ([scriptblock]::Create((irm https://github.com/adityasinghin01-hash/tote/releases/latest/download/install.ps1)))
+          & "$HOME\.tote-guest\bin\tote.exe" version

@@ -44,4 +44,6 @@ tote send-home · tote merge <ticket>              bring the work back
 tote mailbox [use github|s3|folder …]             where boxes wait
 ```
 
-Box format: [docs/SPEC.md](docs/SPEC.md). Build: Go 1.27 — `go build ./cmd/tote`.
+Box format: [docs/SPEC.md](docs/SPEC.md). Build: Go 1.27 — `go build ./cmd/tote`. Every push runs the whole journey on Windows, Linux and macOS ([tools/e2e](tools/e2e/main.go)).
+
+MIT licensed.
