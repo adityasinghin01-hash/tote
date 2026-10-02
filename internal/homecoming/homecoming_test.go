@@ -32,6 +32,13 @@ func read(t *testing.T, p string) string {
 	return string(b)
 }
 
+// setHome points the home folder at dir on every OS (Windows reads
+// USERPROFILE, not HOME).
+func setHome(t *testing.T, dir string) {
+	t.Setenv("HOME", dir)
+	t.Setenv("USERPROFILE", dir)
+}
+
 func hash(s string) string {
 	h := sha256.Sum256([]byte(s))
 	return hex.EncodeToString(h[:])
@@ -68,7 +75,7 @@ func TestRoundTripKeepsEveryEdit(t *testing.T) {
 	}
 
 	// Guest side.
-	t.Setenv("HOME", lab)
+	setHome(t, lab)
 	t.Setenv("TOTE_GUEST_ROOT", "")
 	st, err := guest.Setup(boxDir, m, []guest.Choice{{Tool: "claude", Binary: "/bin/true"}}, adapters, time.Hour, func(string) {})
 	if err != nil {
@@ -97,7 +104,7 @@ func TestRoundTripKeepsEveryEdit(t *testing.T) {
 	}
 
 	// Meanwhile at home.
-	t.Setenv("HOME", home)
+	setHome(t, home)
 	put(t, filepath.Join(homeMem, "MEMORY.md"), "- [a](a.md)\n- mac line\n")
 	put(t, filepath.Join(homeMem, "b.md"), "b original\nMAC EDIT\n")
 
@@ -141,7 +148,7 @@ func TestRoundTripKeepsEveryEdit(t *testing.T) {
 func TestUnknownOriginKeepsBoth(t *testing.T) {
 	t.Setenv("TOTE_CONFIG_DIR", t.TempDir())
 	home := t.TempDir()
-	t.Setenv("HOME", home)
+	setHome(t, home)
 	t.Setenv("CLAUDE_CONFIG_DIR", "")
 	put(t, filepath.Join(home, ".claude", "notes.md"), "home")
 	out := t.TempDir()

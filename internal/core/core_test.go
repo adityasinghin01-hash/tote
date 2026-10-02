@@ -7,6 +7,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"runtime"
 	"testing"
 
 	"github.com/adityasinghin01-hash/tote/internal/box"
@@ -206,6 +207,9 @@ func TestFollowsShortcutsAndGuardsLoops(t *testing.T) {
 }
 
 func TestOtherUsersFilesNeverPacked(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("Windows enforces this with profile permissions, not file owners")
+	}
 	if os.Getuid() == 0 {
 		t.Skip("running as root")
 	}

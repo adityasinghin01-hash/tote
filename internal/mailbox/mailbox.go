@@ -17,6 +17,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"time"
 )
@@ -91,7 +92,7 @@ func Fetch(ctx context.Context, t Ticket) (io.ReadCloser, int64, error) {
 	}
 	switch u.Scheme {
 	case "file":
-		f, err := os.Open(filepath.FromSlash(u.Path))
+		f, err := os.Open(fromFileURL(u))
 		if err != nil {
 			return nil, 0, fmt.Errorf("box not found at %s (is the shared folder synced here?)", u.Path)
 		}
@@ -131,7 +132,7 @@ func Remove(ctx context.Context, t Ticket) error {
 	}
 	switch u.Scheme {
 	case "file":
-		return os.Remove(filepath.FromSlash(u.Path))
+		return os.Remove(fromFileURL(u))
 	case "https", "http":
 		req, err := http.NewRequestWithContext(ctx, http.MethodDelete, t.Del, nil)
 		if err != nil {
@@ -148,6 +149,16 @@ func Remove(ctx context.Context, t Ticket) error {
 		return nil
 	}
 	return fmt.Errorf("unsupported link type %q", u.Scheme)
+}
+
+// fromFileURL turns a file:// link back into a local path; on Windows the
+// link's "/C:/x" must become "C:\x".
+func fromFileURL(u *url.URL) string {
+	p := u.Path
+	if runtime.GOOS == "windows" && len(p) >= 3 && p[0] == '/' && p[2] == ':' {
+		p = p[1:]
+	}
+	return filepath.FromSlash(p)
 }
 
 // fileURL turns a local path into a file:// link that works on every OS.
